@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Toaster } from 'sonner';
 
-export const AuthLayout = () => {
+export default function AuthLayout() {
   return (
     <>
       <div className="bg-slate-800 min-h-screen">
@@ -16,4 +16,4 @@ export const AuthLayout = () => {
       <Toaster position="top-right" />
     </>
   );
-};
+}
