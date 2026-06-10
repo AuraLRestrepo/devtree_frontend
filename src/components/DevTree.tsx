@@ -1,13 +1,23 @@
 import { Link, Outlet } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import NavigationTabs from '../components/NavigationTabs';
-import type { User } from '../types';
+import type { SocialNetwork, User } from '../types';
+import { useEffect, useState } from 'react';
+import DevTreeLink from './DevTreeLink';
 
 type DevTreeProps = {
   data: User;
 };
 
 export default function DevTree({ data }: DevTreeProps) {
+  const [enabledLinks, setEnabledLinks] = useState<SocialNetwork[]>(
+    JSON.parse(data.links).filter((link: SocialNetwork) => link.enabled),
+  );
+
+  useEffect(() => {
+    setEnabledLinks(JSON.parse(data.links).filter((link: SocialNetwork) => link.enabled));
+  }, [data]);
+
   return (
     <>
       <header className="bg-slate-800 py-5">
@@ -43,7 +53,25 @@ export default function DevTree({ data }: DevTreeProps) {
             <div className="flex-1 ">
               <Outlet />
             </div>
-            <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6"></div>
+            <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6">
+              <p className="text-white text-4xl text-center">{data.handle}</p>
+
+              {data.imageUrl && (
+                <img
+                  src={data.imageUrl}
+                  alt="Imagen de perfil"
+                  className="w-32 h-auto border-radius-50% mx-auto block rounded-full"
+                />
+              )}
+
+              <p className="text-white text-center text-lg font-bold">{data.description}</p>
+
+              <div className="mt-20 flex flex-col gap-5">
+                {enabledLinks.map((link: SocialNetwork) => (
+                  <DevTreeLink key={link.name} link={link} />
+                ))}
+              </div>
+            </div>
           </div>
         </main>
       </div>

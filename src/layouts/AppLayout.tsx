@@ -17,7 +17,5 @@ export default function AppLayout() {
     return <Navigate to="/auth/login" replace={true} />;
   }
 
-  console.log(data);
-
   if (data) return <DevTree data={data} />;
 }

@@ -26,7 +26,7 @@ export const LoginView = () => {
       if (isAxiosError(error) && error.response) {
         toast.error(error.response?.data?.error);
       } else {
-        console.log(error);
+        console.error(error);
       }
     }
   };
