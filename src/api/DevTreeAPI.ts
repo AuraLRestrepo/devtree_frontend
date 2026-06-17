@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios';
 import api from '../config/axios';
-import type { User, UserProfile } from '../types';
+import type { User, UserHandle, UserProfile } from '../types';
 
 export async function getUser() {
   try {
@@ -37,6 +37,32 @@ export async function uploadImage(file: File) {
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response?.data?.error);
+    }
+  }
+}
+
+export async function getUserByHandle(handle: string) {
+  try {
+    const { data } = await api.get<UserHandle>(`/${handle}`);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response?.data?.error);
+    } else {
+      console.error(error);
+    }
+  }
+}
+
+export async function searchByHandle(handle: string) {
+  try {
+    const { data } = await api.post<string>('search', { handle });
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response?.data?.error);
+    } else {
+      console.error(error);
     }
   }
 }

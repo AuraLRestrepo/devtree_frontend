@@ -5,6 +5,9 @@ import AuthLayout from './layouts/AuthLayout';
 import AppLayout from './layouts/AppLayout';
 import LinkTreeView from './views/LinkTreeView';
 import ProfileView from './views/ProfileView';
+import HandleView from './views/HandleView';
+import NotFoundView from './views/NotFoundView';
+import HomeView from './views/HomeView';
 
 export const Router = () => {
   return (
@@ -19,6 +22,19 @@ export const Router = () => {
           <Route index={true} element={<LinkTreeView />} />
           <Route path="profile" element={<ProfileView />} />
           {/* Rutas protegidas */}
+        </Route>
+
+        {/* Ruta pública para el perfil */}
+        <Route path="/:handle" element={<AuthLayout />}>
+          <Route index={true} element={<HandleView />} />
+        </Route>
+
+        {/* Home */}
+        <Route path="/" element={<HomeView />} />
+
+        {/* 404 */}
+        <Route path="/404" element={<AuthLayout />}>
+          <Route index={true} element={<NotFoundView />} />
         </Route>
       </Routes>
     </BrowserRouter>

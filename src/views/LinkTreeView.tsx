@@ -140,8 +140,6 @@ export default function LinkTreeView() {
       id: link.enabled ? link.id : 0,
     }));
 
-    console.log(updatedIems);
-
     queryClient.setQueryData(['user'], (prevData: User) => {
       if (!prevData) return prevData;
 
@@ -164,7 +162,7 @@ export default function LinkTreeView() {
       ))}
       <button
         className="bg-cyan-400 p-2 text-lg w-full uppercase text-slate-600 rounded font-bold"
-        onClick={() => mutate(user)}
+        onClick={() => mutate(queryClient.getQueryData(['user'])!)}
       >
         Guardar Cambios
       </button>

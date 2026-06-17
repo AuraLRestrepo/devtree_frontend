@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '../components/ErrorMessage';
 import type { LoginForm } from '../types';
@@ -7,6 +7,8 @@ import { toast } from 'sonner';
 import { isAxiosError } from 'axios';
 
 export const LoginView = () => {
+  const navigate = useNavigate();
+
   const initialValues: LoginForm = {
     email: '',
     password: '',
@@ -22,6 +24,7 @@ export const LoginView = () => {
     try {
       const { data } = await api.post('auth/login', formData);
       localStorage.setItem('AUTH_TOKEN', data);
+      navigate('/admin', { replace: true });
     } catch (error) {
       if (isAxiosError(error) && error.response) {
         toast.error(error.response?.data?.error);
@@ -76,7 +79,7 @@ export const LoginView = () => {
 
         <input
           type="submit"
-          className="bg-cyan-400 p-3 text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer"
+          className="bg-cyan-400 p-3 text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer mt-5"
           value="Iniciar Sesión"
         />
       </form>
